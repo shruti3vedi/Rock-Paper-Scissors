@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+  <title>Document</title>
+</head>
+<body>
+  <h1>Rock Paper Scissor</h1>
+  <script>
+    function getComputerChoice(){
+      const choices = ["ROCK", "PAPER", "SCISSORS"];
+      const randomIndex = Math.floor(Math.random() * choices.length);
+
+      return choices[randomIndex];
+    }
+    let playerScore = 0, computerScore= 0;
+    function playRound(playerSelection, computerSelection) {
+      console.log(playerSelection.toUpperCase())
+      console.log(computerSelection)
+      if(playerSelection.toUpperCase() === computerSelection){
+        console.log("Match Draw");
+      }
+      else if(
+        (playerSelection.toUpperCase()==="ROCK" && computerSelection === "SCISSORS") || 
+        (playerSelection.toUpperCase()==="PAPER" && computerSelection === "ROCK") || 
+        (playerSelection.toUpperCase()==="SCISSORS" && computerSelection === "PAPER")){
+          playerScore++;
+        console.log("Player Wins!");
+      }
+      else if(
+        (playerSelection.toUpperCase()==="ROCK" && computerSelection === "PAPER") || 
+        (playerSelection.toUpperCase()==="PAPER" && computerSelection === "SCISSORS") || 
+        (playerSelection.toUpperCase()==="SCISSORS" && computerSelection === "ROCK")){
+          computerScore++;
+          console.log("Computer Wins!");
+        
+      }
+      else{
+        console.log("Invalid Input");
+      }
+    }
+
+    function game(){
+      for(let i =0; i<5; i++){
+        const playerSelection = prompt("enter your choice(ROCK, PAPER, SCISSORS)")
+        const computerSelection = getComputerChoice();
+          playRound(playerSelection, computerSelection)
+          
+      }
+      if(playerScore>computerScore){
+          console.log("This match is won by player!")
+      }
+      else{
+        console.log("This match is won by computer!")
+      }
+    }
+
+    
+    game();
+  </script>
+</body>
+</html>
