@@ -7,57 +7,82 @@
 </head>
 <body>
   <h1>Rock Paper Scissor</h1>
-  <script>
+  <button id="button1">Rock</button>
+  <button id="button2">Paper</button>
+  <button id="button3">Scissors</button>
+  <div id="roundResult"></div>
+  <div id="score">You : 0, Computer : 0</div>
+  <div id ="result">Result : </div>
+
+ <script>
+    const maxScore = 5;
+    let playerScore = 0, computerScore= 0;
+
     function getComputerChoice(){
       const choices = ["ROCK", "PAPER", "SCISSORS"];
       const randomIndex = Math.floor(Math.random() * choices.length);
 
       return choices[randomIndex];
     }
-    let playerScore = 0, computerScore= 0;
+
     function playRound(playerSelection, computerSelection) {
-      console.log(playerSelection.toUpperCase())
-      console.log(computerSelection)
-      if(playerSelection.toUpperCase() === computerSelection){
-        console.log("Match Draw");
-      }
-      else if(
+      
+     if(
         (playerSelection.toUpperCase()==="ROCK" && computerSelection === "SCISSORS") || 
         (playerSelection.toUpperCase()==="PAPER" && computerSelection === "ROCK") || 
         (playerSelection.toUpperCase()==="SCISSORS" && computerSelection === "PAPER")){
           playerScore++;
-        console.log("Player Wins!");
+          updateScore();
+        return "Player wins this round. " + playerSelection + " beats " + computerSelection;
       }
       else if(
         (playerSelection.toUpperCase()==="ROCK" && computerSelection === "PAPER") || 
         (playerSelection.toUpperCase()==="PAPER" && computerSelection === "SCISSORS") || 
         (playerSelection.toUpperCase()==="SCISSORS" && computerSelection === "ROCK")){
           computerScore++;
-          console.log("Computer Wins!");
+          updateScore();
+          return "You loose. " + computerSelection + " beats " + playerSelection;
         
       }
       else{
-        console.log("Invalid Input");
+        return "It's a tie! Both Chose " + playerSelection;      }
+    }
+    function updateScore(){
+      const scoreElement = document.getElementById("score");
+      scoreElement.textContent = "You : " + playerScore + ", Computer : " + computerScore;
+      if (computerScore === maxScore) {
+        const resultElement = document.getElementById("result");
+        resultElement.textContent = "You Lose!"
+        disableButton();
+      }
+      else if(playerScore === maxScore){
+        const resultElement = document.getElementById("result");
+        resultElement.textContent = "You Win!"
+        disableButton();
+
       }
     }
-
-    function game(){
-      for(let i =0; i<5; i++){
-        const playerSelection = prompt("enter your choice(ROCK, PAPER, SCISSORS)")
-        const computerSelection = getComputerChoice();
-          playRound(playerSelection, computerSelection)
-          
-      }
-      if(playerScore>computerScore){
-          console.log("This match is won by player!")
-      }
-      else{
-        console.log("This match is won by computer!")
-      }
+    function playGame(playerSelection){
+      const computerSelection = getComputerChoice();
+      const result = playRound(playerSelection, computerSelection);
+      const roundResultElement = document.getElementById("roundResult");
+      roundResultElement.textContent = result;
+    }
+    document.getElementById("button1").addEventListener("click", function(){
+      playGame("ROCK");
+    })
+    document.getElementById("button2").addEventListener("click", function(){
+      playGame("PAPER");
+    })
+    document.getElementById("button3").addEventListener("click", function(){
+      playGame("SCISSORS");
+    })
+    function disableButton(){
+      document.getElementById("button1").disabled = true;
+        document.getElementById("button2").disabled = true;
+        document.getElementById("button3").disabled = true;
     }
 
-    
-    game();
   </script>
 </body>
 </html>
